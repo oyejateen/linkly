@@ -19,7 +19,7 @@ router.get('/', authMiddleware.requireAuth, async (req, res) => {
 });
 
 
-// Update user's linktree
+// user's linktree
 router.post('/', authMiddleware.requireAuth, async (req, res) => {
   const { title, subtitle, profileUrl, links } = req.body;
 
@@ -39,7 +39,7 @@ router.post('/', authMiddleware.requireAuth, async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
-// Create LinkTree Page
+
 router.get('/create', authMiddleware.requireAuth, (req, res) => {
   res.render('dashboard/create');
 });
@@ -58,7 +58,7 @@ router.post('/create', authMiddleware.requireAuth, async (req, res) => {
   }
 });
 
-// Design LinkTree Page
+// Design LinkTree 
 router.get('/design/:id', authMiddleware.requireAuth, async (req, res) => {
   try {
     const linkTree = await LinkTree.findById(req.params.id);
@@ -93,7 +93,7 @@ router.post('/design/:id', authMiddleware.requireAuth, async (req, res) => {
   }
 });
 
-// Preview LinkTree Page
+// Preview LinkTree 
 router.get('/preview/:id', authMiddleware.requireAuth, async (req, res) => {
   try {
     const linkTree = await LinkTree.findById(req.params.id);
