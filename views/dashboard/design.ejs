@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Design Your LinkTree Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        background: linear-gradient(to right, #FFB88C, #DE6262);
+        backdrop-filter: blur(14px);
+      }
+       
+      .form-container {
+        display: flex;
+        background: linear-gradient(to right, #FFB88C, #DE6262);
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      form {
+        width: 90%;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+</head>
+<body>
+  <div class="form-container">
+    <form action="/dashboard/design/<%= linkTree._id %>" method="POST" enctype="multipart/form-data">
+      <h2 class="mb-4 text-center">Design Your LinkTree Page</h2>
+
+      <div class="form-group mb-3">
+        <label for="profilePicture" class="form-label">Profile Picture</label>
+        <input type="file" class="form-control" id="profilePicture" name="profilePicture">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name">
+      </div>
+      <div class="form-group mb-3">
+        <label for="pronounce" class="form-label">Pronounce</label>
+        <select name="pronounce" class="form-control" required>
+                    <option value="pronoun" disabled selected>Select a Pronoun</option>
+                    <option value="male">He/Him</option>
+                    <option value="female">She/Her</option>
+                    <option value="theymale">They/Them</option>
+                    <option value="nosay">Prefer not to say</option>
+
+                </select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea class="form-control" id="bio" name="bio"></textarea>
+      </div>
+
+      <hr>
+
+      <h5 class="mb-3">Social Media Links</h5>
+
+      <div class="form-group mb-3">
+        <label for="instagram" class="form-label">Instagram</label>
+        <input type="text" class="form-control" id="instagram" name="instagram">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="twitter" class="form-label">Twitter</label>
+        <input type="text" class="form-control" id="twitter" name="twitter">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="youtube" class="form-label">YouTube</label>
+        <input type="text" class="form-control" id="youtube" name="youtube">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="tiktok" class="form-label">TikTok</label>
+        <input type="text" class="form-control" id="tiktok" name="tiktok">
+      </div>
+      <div class="form-group mb-3">
+        <label for="tiktok" class="form-label">Only Fans</label>
+        <input type="text" class="form-control" id="onlyfans" name="onlyfans">
+      </div>
+     <div class="form-group mb-3">
+        <label for="tiktok" class="form-label">Twitch</label>
+        <input type="text" class="form-control" id="twitch" name="twitch">
+      </div>
+     <div class="form-group mb-3">
+        <label for="tiktok" class="form-label">Stream</label>
+        <input type="text" class="form-control" id="stream" name="stream">
+      </div>
+      <div id="links-container">
+      <div class="link-group mb-3">
+            <input type="text" name="link_title[]" class="form-control" placeholder="Enter link title">
+            <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL">
+            <button type="button" class="btn btn-danger remove-link">Remove</button>
+          </div>
+      </div>
+        <button type="button" id="add-link" class="btn btn-primary">Add More Link</button>
+
+      
+      <hr>
+
+      <h5 class="mb-3">Write your blog</h5>
+
+<div id="blog-fields">
+  <div class="blog-field mb-3">
+    <div class="form-group">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" name="title[]" class="form-control" placeholder="Enter your title">
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea name="description[]" class="form-control" rows="3" placeholder="Enter your description"></textarea>
+    </div>
+
+    <button type="button" class="remove-blog btn btn-danger">Remove</button>
+  </div>
+  
+</div>
+
+<button type="button" id="add-blog" class="btn btn-primary mt-2">Add More Blog</button>
+
+<hr>
+<div class="form-group mb-3">
+      <label for="linkTreeName" class="form-label">LinkTree Name</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">linktree.com/</span>
+        </div>
+        <input type="text" class="form-control" name="linkTreeName" id="linkTreeName" placeholder="Your name" aria-label="LinkTree Name" aria-describedby="basic-addon1" required>
+      </div>
+      <p class="small mt-2">Your LinkTree profile URL will be "linktree.com/your_name"</p>
+<p id="linkTreeNameError" class="small mt-2"></p>
+  <button type="button" id="check-name" class="btn btn-primary mt-2">Check Name</button>
+          </div>
+      <hr>
+      <button type="submit" class="btn btn-primary mt-4 text-center">Preview Your Page</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    const checkNameBtn = document.getElementById('check-name');
+checkNameBtn.addEventListener('click', checkName);
+
+    async function checkName() {
+  const linkTreeName = document.getElementById('linkTreeName').value;
+  const linkTreeNameError = document.getElementById('linkTreeNameError');
+  try {
+    const response = await fetch(`/api/check-name?linkTreeName=${linkTreeName}`);
+    const data = await response.json();
+    if (data.exists) {
+      linkTreeNameError.innerText = 'Name already exists';
+    } else {
+      linkTreeNameError.innerText = 'name available';
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+    $(document).ready(function() {
+
+      $("#add-link").on("click", function() {
+        var linkGroup = `
+          <div class="link-group mb-3">
+            <input type="text" name="link_title[]" class="form-control" placeholder="Enter link title">
+            <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL">
+            <button type="button" class="btn btn-danger remove-link">Remove</button>
+          </div>
+        `;
+        $("#links-container").append(linkGroup);
+      });
+
+      // Remove link button functionality
+      $(document).on("click", ".remove-link", function() {
+        $(this).parent().remove();
+      });
+    });
+     $(document).ready(function() {
+  // Add blog input field
+  $("#add-blog").click(function() {
+    var blogField = '<div class="blog-field mb-3">' +
+                    '<div class="form-group">' +
+                    '<label for="title" class="form-label">Title</label>' +
+                    '<input type="text" name="title[]" class="form-control" placeholder="Enter your title">' +
+                    '</div>' +
+                    '<div class="form-group mb-3">' +
+                    '<label for="description" class="form-label">Description</label>' +
+                    '<textarea name="description[]" class="form-control" rows="3" placeholder="Enter your description"></textarea>' +
+                    '</div>' +
+                    '<button type="button" class="remove-blog btn btn-danger">Remove</button>' +
+                    '</div>';
+
+    $("#blog-fields").append(blogField);
+  });
+
+  // Remove blog input field
+  $(document).on('click', '.remove-blog', function() {
+    $(this).closest('.blog-field').remove();
+  });
+});
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Create Your LinkTree Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Create Your LinkTree Page</h1>
+        <form method="POST" action="/dashboard/create">
+            <div class="form-group">
+                <label for="layout">Select a layout:</label>
+                <select name="layout" class="form-control" required>
+                    <option value="" disabled selected>Select a layout</option>
+                    <option value="layout1">Layout 1</option>
+                    <option value="layout2">Layout 2</option>
+                    <option value="layout3">Layout 3</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

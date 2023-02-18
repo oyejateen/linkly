@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= linkTree.title %></title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: <%= linkTree.backgroundColor %>;
+    }
+
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 0;
+      background-image: url('<%= linkTree.backgroundImageUrl %>');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid white;
+    }
+
+    .name {
+      font-size: 32px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .link {
+      margin: 10px;
+      text-align: center;
+    }
+
+    .link a {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .watermark {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: gray;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <img src="<%= linkTree.profileUrl %>" alt="Profile Picture" class="profile-picture">
+  </div>
+
+  <div class="container">
+    <h1 class="name"><%= linkTree.title %></h1>
+    <h2 class="subtitle"><%= linkTree.subtitle %></h2>
+
+    <div class="links">
+      <% for (let i = 0; i < linkTree.links.length; i++) { %>
+        <div class="link">
+          <% if (linkTree.links[i].type === 'link') { %>
+            <a href="<%= linkTree.links[i].value %>"><%= linkTree.links[i].name %></a>
+          <% } else { %>
+            <p><%= linkTree.links[i].name %></p>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="watermark">
+      Powered by LinkTree
+    </div>
+  </div>
+</body>
+
+</html>

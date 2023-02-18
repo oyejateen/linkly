@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Register</title>
+
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+      body {
+  background: linear-gradient(to bottom right, #ffc3a0, #ffafbd, #bad4ff, #ffd4f4, #ffc3a0);
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: gradient 10s ease infinite;
+  width: 100%;
+  height: 100vh;
+  padding: 20px, 0, 0, 20px;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+      .card {
+        margin: 0 auto;
+        margin-bottom: 55px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        max-width: 500px;
+      }
+      form {
+        backdrop-filter: blur(19px);
+      }
+
+      .form-title {
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-control {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .btn-register {
+        display: block;
+        width: 100%;
+        height: 40px;
+        background-color: #FF69B4;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .btn-register:hover {
+        background-color: #FF1493;
+      }
+
+      .link-login {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        color: #FF69B4;
+        font-weight: bold;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="card">
+        <div class="form-title">Login to LinkTree</div>
+        <form method="POST" action="/auth/login">
+          
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-register">Login</button>
+        <a href="/auth/register" class="link-login">First time? Register here.</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- Link to Bootstrap JS (jQuery and Popper.js are required for Bootstrap) -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

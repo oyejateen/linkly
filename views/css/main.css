@@ -1,0 +1,12 @@
+/* center the content */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* make profile picture circular */
+.profile-pic {
+  border-radius: 50%;
+}
