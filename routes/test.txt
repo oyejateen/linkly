@@ -1,0 +1,95 @@
+Lavender Bliss:
+background: linear-gradient(to bottom right, #ddd6f3, #faaca8);
+Peach Paradise:
+background: linear-gradient(to bottom right, #fdd6bd, #ffaaaa);
+Minty Fresh:
+background: linear-gradient(to bottom right, #b0dab9, #e1eec3);
+Blue Lagoon:
+background: linear-gradient(to bottom right, #a3d8f4, #b1cbbb);
+Coral Crush:
+background: linear-gradient(to bottom right, #ff8a84, #ffaaaa);
+Lemon Sorbet:
+background: linear-gradient(to bottom right, #f6e9d2, #ffce84);
+Cotton Candy:
+background: linear-gradient(to bottom right, #ffdde1, #e0bbff);
+Apricot Dream:
+background: linear-gradient(to bottom right, #ffd6a5, #faaca8);
+Ocean Breeze:
+background: linear-gradient(to bottom right, #a1c4fd, #c2e9fb);
+Grape Fizz:
+background: linear-gradient(to bottom right, #f094c4, #f0a2d0);
+
+  res.render('index', { bioHtml });
+});
+
+    <style>
+      body {
+        background: linear-gradient(to right, #FFC3A0, #FFAFBD, #C0C3FF, #8EC5FC);
+        background-size: 400% 400%;
+        -webkit-animation: GradientBackground 10s ease infinite;
+        -moz-animation: GradientBackground 10s ease infinite;
+        animation: GradientBackground 10s ease infinite;
+      }
+
+      @-webkit-keyframes GradientBackground {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+      @-moz-keyframes GradientBackground {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+      @keyframes GradientBackground { 
+        0%{background-position: 0% 50%;}
+        50%{background-position: 100% 50%;}
+        100%{background-position: 0% 50%;}
+      }
+    </style>
+Hey gpt umm i am trying to make a dashboard for my website alright so what i want in it is 
+1. Hamburger navbar and menu should contain dashboard, premium, about, contact, logout.
+2. Img logo in the middle on the navbar.
+3. Round linkTree.profilePicture on the right side of the navbar 
+4. Greetings like hey linkTree.name welcome to linkly
+5. A rectangle card and in it i want heading your page and then linkly.com/linkTree.linkTreeName . Three options edit view nd delete below it in the card only in the table kinda thing 
+6. A card named your analytics and a button in blacked written coming soon.
+7. Section named premium and in it i want two cards named pro plan and name it yourself please. 
+And footer section atlast 
+This is my messy current code you can get inspiration from it too:-
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div class="container d-flex justify-content-center align-items-center" style="height:100vh;">
+      <% if (!hasLinktree) { %>
+        <div class="row">
+          
+          <div class="col-md-12 text-center">
+            <h1>Welcome to your Dashboard!</h1>
+            <a href="/dashboard/create" class="btn btn-primary btn-lg mt-5">Create your Linktree page</a>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>Welcome to your Dashboard, <%= linktreeName %>!</h1>
+            <h3>Your Linktree page: linkly.com/<%= linktreeName %></h3>
+            <a href="/dashboard/edit/<%= linktree._id %>" class="btn btn-primary btn-lg mt-5">Edit</a>
+            <a href="/<%= linktreeName %>" class="btn btn-primary btn-lg mt-5" target="_blank">View</a>
+            <form action="/dashboard/delete/<%= linktree._id %>" method="POST" style="display: inline-block;">
+              <button type="submit" class="btn btn-danger btn-lg mt-5">Delete</button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>

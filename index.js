@@ -8,25 +8,26 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = express();
 const LinkTree = require('./models/LinkTree');
+const cors = require('cors');
+const User = require('./models/user');
 
 dotenv.config();
 
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
+app.use(express.static('views'));
 app.use(session({
   secret: process.env.secrett,
   resave: false,
   saveUninitialized: true
 }));
 app.use(flash());
-
 app.set('view engine', 'ejs');
 
 
-mongoose.connect('mongodb+srv://Mishri:mishri@mishri.ewwdber.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.mongo, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -35,6 +36,18 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB database');
 });
+
+async function lala() {
+
+const allUsers = await User.find();
+console.log(allUsers[0])
+console.log(allUsers[0].linktree)
+
+  //await LinkTree.deleteOne({ name: 'Sunshine', });
+  const allLinktrees = await LinkTree.find();
+  console.log(allLinktrees)
+}
+
 
 
 const indexRoutes = require('./routes/index');

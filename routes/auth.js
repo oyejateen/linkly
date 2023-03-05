@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const LinkTree = require('../models/LinkTree');
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
@@ -10,13 +11,13 @@ router.get("/register", (req, res) => {
 
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ msg: "Please enter all fields" });
     }
 
-    const existingUser = await User.findOne({ email: email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
     }
@@ -25,7 +26,7 @@ router.post("/register", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      name,
+      username,
       email,
       password: passwordHash,
     });
@@ -41,7 +42,10 @@ router.post("/register", async (req, res) => {
       maxAge: 3600000,
     });
 
-    res.redirect("/dashboard"); // Redirect to dashboard after successful registration
+    res.render('dashboard', {
+      title: 'Dashboard',
+      hasLinktree: false
+    }); // Redirect to dashboard after successful registration
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -60,7 +64,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ msg: "Please enter all fields" });
     }
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: "User does not exist" });
     }
@@ -78,11 +82,29 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       maxAge: 3600000,
     });
+  const usser = await User.findOne({ email })
+    .populate('linktree', 'linkTreeName');
+    
+   
 
-    res.redirect("/dashboard"); // Redirect to dashboard after successful login
+  if (usser.linktree) {
+    const linkTree = await LinkTree.findOne({ linkTreeName: usser.linktree.linkTreeName, });
+    res.render('dashboard', {
+      title: 'Dashboard',
+      linktree: usser.linktree,
+      linktreeName: usser.linktree.linkTreeName,
+      hasLinktree: true,
+      linkTree
+    });
+  } else {
+    res.render('dashboard', {
+      title: 'Dashboard',
+      hasLinktree: false
+    });
+  }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message });
+    res.render('dashboard/error', { msg: err.message  });
   }
 });
 

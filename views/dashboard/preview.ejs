@@ -1,100 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="https://kit.fontawesome.com/1d6179e528.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner&family=Homemade+Apple&family=PT+Sans:wght@400;700&display=swap"
+    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/layout1.css">
+  <!--  <link rel="stylesheet" href="../css/layout2.css">
+    <link rel="stylesheet" href="../css/layout3.css">-->
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title><%= linkTree.title %></title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: <%= linkTree.backgroundColor %>;
-    }
+    
 
-    .header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 30px 0;
-      background-image: url('<%= linkTree.backgroundImageUrl %>');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- HTML Meta Tags -->
+    <title><%= linkTree.header %></title>
+    <meta name="theme-color" content="#00000">
+    <meta name="description" content="Link your world with Linkly">
 
-    .profile-picture {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 5px solid white;
-    }
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="<%= linkTree.header %>">
+    <meta itemprop="description" content="Link your world with Linkly">
+    <meta itemprop="image" content="<%= linkTree.profilePicture %>">
 
-    .name {
-      font-size: 32px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<%= linkTree.header %>">
+    <meta property="og:description" content="Link your world with Linkly">
+    <meta property="og:image" content="<%= linkTree.profilePicture %>">
 
-    .subtitle {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= linkTree.header %>">
+    <meta name="twitter:image" content="<%= linkTree.profilePicture %>">
+    <meta name="twitter:description" content="Link your world with Linkly">
+<link rel="shortcut icon" href="<%= linkTree.profilePicture %>">
 
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
 
-    .link {
-      margin: 10px;
-      text-align: center;
-    }
-
-    .link a {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .watermark {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      font-size: 12px;
-      color: gray;
-    }
-  </style>
-</head>
-
+  </head>
 <body>
   <div class="header">
-    <img src="<%= linkTree.profileUrl %>" alt="Profile Picture" class="profile-picture">
+    <div class="icon-container">
+  <a id="ic" class="share-icon"><i class="fas fa-share-alt"></i></a>
+</div>
+    <nav class="navbar">
+    <div class="navbar__profile">
+      <img src="<%= linkTree.profilePicture %>" alt="Profile picture">
+    </div>
+      <div class="my_name"><h1><%= linkTree.name %></h1></div>
+    <div class="navbar__share">
+      <a class="share-icons"><i class="fas fa-share-alt"></i></a>
+    </div>
+    </nav>
+
+    <img class="profile-picture" src="<%= linkTree.profilePicture %>" alt="Profile picture" />
+    <div class="name-pronoun-container">
+      <div class="name"><h1><%= linkTree.name %></h1></div>
+      <div class="pronoun"><%= linkTree.pronounce %></div>
+    </div>
   </div>
+  <div class="container-card">
+   <div class="card">
 
-  <div class="container">
-    <h1 class="name"><%= linkTree.title %></h1>
-    <h2 class="subtitle"><%= linkTree.subtitle %></h2>
 
-    <div class="links">
-      <% for (let i = 0; i < linkTree.links.length; i++) { %>
-        <div class="link">
-          <% if (linkTree.links[i].type === 'link') { %>
-            <a href="<%= linkTree.links[i].value %>"><%= linkTree.links[i].name %></a>
-          <% } else { %>
-            <p><%= linkTree.links[i].name %></p>
-          <% } %>
+      <div class="dropdown">
+        <button class="dropdown-button">Bio</button>
+        <div class="dropdown-content">
+          <div id="bioContent" style="text-align:left;justify-content:left;"><%= linkTree.bio %></div>
         </div>
-      <% } %>
-    </div>
+      </div>
 
-    <div class="watermark">
-      Powered by LinkTree
+
+    <% if (linkTree.links && linkTree.links.length > 0) { %>
+  <h1 style="display:flex;font-size:20px;justify-content:center;" class="blogs">Links</h1>
+<% } %>
+
+
+      <% linkTree.links.forEach(function(link) { %>
+  <a style="text-decoration:none;" target="_blank" href="<%= link.url %>">
+    <button style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; justify-content: space-between;">
+  <img src="<%= link.image %>" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover;" />
+  <div style="display: flex; align-items: center; justify-content: center; flex-grow: 1;">
+    <%= link.title %>
+  </div>
+</button>
+
+  </a>
+<% }); %>
+
+      <% if (linkTree.blogs && linkTree.blogs.length > 0) { %>
+  <h1 style="display:flex;font-size:20px;justify-content:center;" class="blogs">Blogs</h1>
+<% } %>
+
+      <div class="dropdown">
+  <% for (let i = 0; i < blogsHtml.length; i++) { %>
+    <button class="dropdown-button" onclick="toggleDropdown('<%= 'blog-' + i %>')"><%= [i + 1] %>. <%= linkTree.blogs[i].title %></button>
+    <div class="dropdown-content" id="<%= 'blog-' + i %>">
+      <div class="blog">
+        <div class="blog-body" style="text-align:left;justify-content:left;"><%- blogsHtml[i].xml %></div>
+      
+      </div>
+    </div>
+  <% } %>
+  </div>
+
+
     </div>
   </div>
-</body>
+  <div class="watermark">
+   <p>Powered by <a href="https://linkly.iiiv.repl.co" style="text-decoration:none;color:black;"> Linkly</a><p>
+  </div>
+    <script src="https://kit.fontawesome.com/1d6179e528.js" crossorigin="anonymous"></script>
+  
+         
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
 
+    const bioContent = document.getElementById('bioContent');
+const html = marked.parse(bioContent.innerHTML);
+
+    bioContent.innerHTML = html;
+  });
+</script>
+<script>
+   const dropdownButtons = document.querySelectorAll('.dropdown-button');
+
+dropdownButtons.forEach(button => {
+  button.addEventListener('click', event => {
+    const dropdownContent = event.target.nextElementSibling;
+    if (dropdownContent.style.display === 'block') {
+      dropdownContent.style.display = 'none';
+    } else {
+      dropdownContent.style.display = 'block';
+    }
+  });
+});
+    const profilePicture = document.querySelector('.profile-picture');
+    const navbar = document.querySelector('.navbar');
+
+    const navbarShare = document.querySelector(".navbar__share")
+    window.addEventListener('scroll', () => {
+      const top = profilePicture.getBoundingClientRect().top;
+      if (top <= 0) {
+        navbar.classList.add('show');
+        document.getElementById('ic').style.display = "none";
+    navbarShare.appendChild(iconContainer);
+
+      } else {
+        navbar.classList.remove('show');
+        document.getElementById('ic').style.display = "block";
+        document.body.appendChild(iconContainer)
+      }
+    });
+    const sharesIcon = document.querySelector(".share-icons");
+sharesIcon.addEventListener("click", () => {
+  if (navigator.share) {
+    navigator.share({
+      title: document.title,
+      text: "Check out this page!",
+      url: window.location.href
+    })
+      .then(() => console.log("Shared successfully."))
+      .catch((error) => console.error("Error sharing:", error));
+  } else {
+    console.log("Sharing not supported.");
+  }
+});
+const shareIcon = document.querySelector(".share-icon");
+shareIcon.addEventListener("click", () => {
+  if (navigator.share) {
+    navigator.share({
+      title: document.title,
+      text: "Check out this page!",
+      url: window.location.href
+    })
+      .then(() => console.log("Shared successfully."))
+      .catch((error) => console.error("Error sharing:", error));
+  } else {
+    console.log("Sharing not supported.");
+  }
+});
+    function convertToHtml(text) {
+  const converter = new showdown.Converter();
+  const html = converter.makeHtml(text);
+  const sanitizedHtml = DOMPurify.sanitize(html);
+  return sanitizedHtml;
+}
+if ("<%= linkTree.layout %>" === "layout1") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #a1c4fd, #c2e9fb)";
+      }
+  if ("<%= linkTree.layout %>" === "layout2") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #ffd6a5, #faaca8)";
+      }
+  if ("<%= linkTree.layout %>" === "layout3") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #ffdde1, #e0bbff)";
+      }
+  if ("<%= linkTree.layout %>" === "layout4") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #f6e9d2, #ffce84)";
+      }
+  if ("<%= linkTree.layout %>" === "layout5") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #ff8a84, #ffaaaa)";
+      }
+  if ("<%= linkTree.layout %>" === "layout6") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #a3d8f4, #b1cbbb)";
+      }
+  if ("<%= linkTree.layout %>" === "layout7") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #b0dab9, #e1eec3)";
+      }
+  if ("<%= linkTree.layout %>" === "layout8") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #fdd6bd, #ffaaaa)";
+      }
+  if ("<%= linkTree.layout %>" === "layout9") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #ddd6f3, #faaca8)";
+      }
+  if ("<%= linkTree.layout %>" === "layout10") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #a8e6ce, #dcedc1)";
+      }
+  if ("<%= linkTree.layout %>" === "layout11") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #a2d2ff, #cff2ff)";
+      }
+  if ("<%= linkTree.layout %>" === "layout12") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #ffe9b9, #fff3e3)";
+      }
+  if ("<%= linkTree.layout %>" === "layout13") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #bce6eb, #fed6e3)";
+      }
+  if ("<%= linkTree.layout %>" === "layout14") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #ffd3b5, #ffaaa6, #ff8b94, #ff6988, #ff5f8d)";
+      }
+  if ("<%= linkTree.layout %>" === "layout15") {
+        document.body.style.backgroundImage = "linear-gradient(to bottom right, #a7e9ff, #fed6e3)";
+  }
+   /*
+if (linktree.layout === 'layout1') {
+  // enable layout 1 CSS and disable other CSS files
+  document.querySelector('link[href="../css/layout1.css"]').disabled = false;
+  document.querySelector('link[href="../css/layout2.css"]').disabled = true;
+  document.querySelector('link[href="../css/layout3.css"]').disabled = true;
+} else if (linktree.layout === 'layout2') {
+  // enable layout 2 CSS and disable other CSS files
+  document.querySelector('link[href="../css/layout1.css"]').disabled = true;
+  document.querySelector('link[href="../css/layout2.css"]').disabled = false;
+  document.querySelector('link[href="../css/layout3.css"]').disabled = true;
+} else if (linktree.layout === 'layout3') {
+  // enable layout 3 CSS and disable other CSS files
+  document.querySelector('link[href="../css/layout1.css"]').disabled = true;
+  document.querySelector('link[href="../css/layout2.css"]').disabled = true;
+  document.querySelector('link[href="../css/layout3.css"]').disabled = false;
+}
+*/
+
+
+  </script>
+</body>
 </html>

@@ -4,9 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Register</title>
+    <title>Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+        <link href="https://linkly.bio/themes/altum/assets/css/bootstrap.min.css?v=3010" id="css_theme_style" rel="stylesheet" media="screen,print">
+                    <link href="https://linkly.bio/themes/altum/assets/css/custom.css?v=3010" rel="stylesheet" media="screen,print">
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Xp0KZ8kB+xt9c3qAnQqlNzjBn/w8W/hzTnzv/axtTzLj/TF8WkX9q3dUpmepgPtztCJ8w/YMYp+AdhKl1r34Eg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
     <style>
       body {
@@ -14,9 +21,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   animation: gradient 10s ease infinite;
-  width: 100%;
-  height: 100vh;
-  padding: 20px, 0, 0, 20px;
+  
+    background-size: 400% 400%;
 }
 
 @keyframes gradient {
@@ -34,14 +40,14 @@
 
       .card {
         margin: 0 auto;
+        margin-top: 10vh;
         margin-bottom: 55px;
         padding: 20px;
+      background-color: rgba(255, 255, 255, 0.5); /* transparent white background */
+  backdrop-filter: blur(50px); 
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         border-radius: 5px;
         max-width: 500px;
-      }
-      form {
-        backdrop-filter: blur(19px);
       }
 
       .form-title {
@@ -104,8 +110,35 @@
   <body>
 
     <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand font-weight-bold" href="/" data-logo data-light-value="https://media.discordapp.net/attachments/890149366499786762/1080403877729411142/Picsart_23-03-01_13-39-47-754-removebg-preview.png" data-light-class="img-fluid navbar-logo" data-dark-value="https://linkly.bio/uploads/main/56a197f7f2b48fff93363c8515d00770.png" data-dark-class="img-fluid navbar-logo">
+    <img src="https://media.discordapp.net/attachments/890149366499786762/1080474790466437181/Picsart_23-03-01_18-30-07-204.png" class="img-fluid navbar-logo" alt="Website Logo" />
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-close-icon d-none"><i class="fa fa-times"></i></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/auth/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/auth/register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact Us</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
       <div class="card">
-        <div class="form-title">Login to LinkTree</div>
+        <div class="form-title">Login</div>
         <form method="POST" action="/auth/login">
           
           <div class="form-group">
@@ -117,7 +150,7 @@
           <input type="password" id="password" name="password" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-register">Login</button>
-        <a href="/auth/register" class="link-login">First time? Register here.</a>
+        <a href="/auth/register" class="link-login">New to Linkly? Register here.</a>
       </form>
     </div>
   </div>
@@ -125,6 +158,6 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+<script src="https://linkly.bio/themes/altum/assets/js/libraries/jquery.min.js?v=3010"></script>
 </body>
 </html>

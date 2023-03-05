@@ -6,8 +6,72 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Create Your LinkTree Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+  background-image: linear-gradient(to bottom right, #a1c4fd, #c2e9fb);
+}
+
+body.layout2 {
+  background-image: linear-gradient(to bottom right, #ffd6a5, #faaca8);
+}
+
+body.layout3 {
+  background-image: linear-gradient(to bottom right, #ffdde1, #e0bbff);
+}
+
+body.layout4 {
+  background-image: linear-gradient(to bottom right, #f6e9d2, #ffce84);
+}
+
+body.layout5 {
+  background-image: linear-gradient(to bottom right, #ff8a84, #ffaaaa);
+}
+
+body.layout6 {
+  background-image: linear-gradient(to bottom right, #a3d8f4, #b1cbbb);
+}
+
+body.layout7 {
+  background-image: linear-gradient(to bottom right, #b0dab9, #e1eec3);
+}
+
+body.layout8 {
+  background-image: linear-gradient(to bottom right, #fdd6bd, #ffaaaa);
+}
+
+body.layout9 {
+  background-image: linear-gradient(to bottom right, #ddd6f3, #faaca8);
+}
+
+body.layout10 {
+  background-image: linear-gradient(to bottom right, #a8e6ce, #dcedc1);
+}
+
+body.layout11 {
+  background-image: linear-gradient(to bottom right, #a2d2ff, #cff2ff);
+}
+
+body.layout12 {
+  background-image: linear-gradient(to bottom right, #ffe9b9, #fff3e3);
+}
+
+body.layout13 {
+  background-image: linear-gradient(to bottom right, #bce6eb, #fed6e3);
+}
+
+body.layout14 {
+  background-image: linear-gradient(to bottom right, #ffd3b5, #ffaaa6, #ff8b94, #ff6988, #ff5f8d);
+}
+
+body.layout15 {
+  background-image: linear-gradient(to bottom right, #a7e9ff, #fed6e3);
+}
+
+        /* Add more styles for other layouts here */
+    </style>
 </head>
-<body>
+<body class="layout1" style="background-size: cover;
+  background-repeat: no-repeat;background-size: 400% 400%;">
     <div class="container mt-5">
         <h1>Create Your LinkTree Page</h1>
         <form method="POST" action="/dashboard/create">
@@ -15,13 +79,36 @@
                 <label for="layout">Select a layout:</label>
                 <select name="layout" class="form-control" required>
                     <option value="" disabled selected>Select a layout</option>
-                    <option value="layout1">Layout 1</option>
-                    <option value="layout2">Layout 2</option>
-                    <option value="layout3">Layout 3</option>
+                    <option value="layout1">Ocean Breeze</option>
+                    <option value="layout2">Apricot Dream</option>
+                    <option value="layout3">Cotton Candy</option>
+                    <option value="layout4">Lemon Sorbet</option>
+                    <option value="layout5">Coral Crush</option>
+                    <option value="layout6">Blue Lagoon</option>
+                    <option value="layout7">Minty Fresh</option>
+                    <option value="layout8">Peach Paradise</option>
+                    <option value="layout9">Lavender Bliss</option>
+                    <option value="layout10">Blue Sky</option>
+                    <option value="layout11">Rase Garden</option>
+                    <option value="layout12">Lavender Fields</option>
+                    <option value="layout13">Mint and Lavender</option>
+                    <option value="layout14">Peach and Pink</option>
+                    <option value="layout15">SkyBlue and Pink</option>
                 </select>
             </div>
+     
+          
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+    <script>
+        const layoutSelect = document.querySelector('[name="layout"]');
+        const body = document.querySelector('body');
+        
+        layoutSelect.addEventListener('change', function() {
+            body.className = this.value;
+        });
+    </script>
 </body>
 </html>

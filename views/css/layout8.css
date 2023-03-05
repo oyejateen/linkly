@@ -1,0 +1,257 @@
+body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom right, #fdd6bd, #ffaaaa);
+
+        background-size: cover;
+        background-repeat: no-repeat;
+        animation: gradient 10s ease infinite;
+        min-height: 100vh;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+.blog-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+      .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 0;
+        background-image: url('<%= linkTree.backgroundImageUrl %>');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+      }
+
+      .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 5px solid white;
+        margin-top: 20px;
+      }
+
+      .name-pronoun-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .name {
+        font-size: 12px;
+        margin-top: 10px;
+      }
+
+      .pronoun {
+        font-size: 18px;
+        color: gray;
+      }
+
+      .container-card {
+        display: flex;
+        justify-content: center;
+      }
+
+      .card {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+
+      .card button {
+        border: none;
+        background-color: white;
+        cursor: pointer;
+        font-size: 20px;
+        text-align: left;
+        width: 100%;
+        padding: 15px;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .card button >a {
+        text-decoration: none;
+      }
+
+      .card button:focus {
+        outline: none;
+      }
+
+      .card button:hover {
+        color: blue;
+      }
+      .icon-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.share-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.share-icon i {
+  color: black;
+  font-size: 18px;
+}
+      .share-icons {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.share-icons i {
+  color: black;
+  font-size: 18px;
+        }
+      .navbar {
+      position: fixed;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.5); /* transparent white background */
+  backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+      opacity: 0;
+      backdrop-filter: blur(68px);
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .navbar.show {
+      opacity: 1;
+      position: fixed;
+      top: 10px;
+      padding: 5px;
+      background-color: rgba(255, 255, 255, 0.5); /* transparent white background */
+  backdrop-filter: blur(10px); 
+      left: 20px;
+      right: 20px;
+      display: flex;
+      border-radius: 50px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar__profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar__profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+      .my_name {
+        font-size: 11px;
+      }
+
+    .navbar__share {
+      display: flex;
+      margin-right: 10px;
+      flex-direction: flex-end;
+      color: #444;
+      cursor: pointer;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .navbar__share:hover {
+      color: #2f2f2f;
+        }
+      
+
+
+
+      .dropdown-content {
+        display: none;
+        margin: 10px;
+        padding: 15px;
+        border-radius: 25px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        background-color: white;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid lightgray;
+        font-size: 18px;
+      }
+
+      .dropdown-content a:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-content a:hover {
+        background-color: lightgray;
+      }
+
+      .show {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .card {
+          width: 100%;
+        }
+      }
+      .watermark {
+        position: relative;
+        margin-bottom: 15%;
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 12px;
+        color: gray;
+      }

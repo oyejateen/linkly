@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+               body.layout1 {
+  background-image: linear-gradient(to bottom right, #a1c4fd, #c2e9fb);
+}
+
+body.layout2 {
+  background-image: linear-gradient(to bottom right, #ffd6a5, #faaca8);
+}
+
+body.layout3 {
+  background-image: linear-gradient(to bottom right, #ffdde1, #e0bbff);
+}
+
+body.layout4 {
+  background-image: linear-gradient(to bottom right, #f6e9d2, #ffce84);
+}
+
+body.layout5 {
+  background-image: linear-gradient(to bottom right, #ff8a84, #ffaaaa);
+}
+
+body.layout6 {
+  background-image: linear-gradient(to bottom right, #a3d8f4, #b1cbbb);
+}
+
+body.layout7 {
+  background-image: linear-gradient(to bottom right, #b0dab9, #e1eec3);
+}
+
+body.layout8 {
+  background-image: linear-gradient(to bottom right, #fdd6bd, #ffaaaa);
+}
+
+body.layout9 {
+  background-image: linear-gradient(to bottom right, #ddd6f3, #faaca8);
+}
+
+body.layout10 {
+  background-image: linear-gradient(to bottom right, #a8e6ce, #dcedc1);
+}
+
+body.layout11 {
+  background-image: linear-gradient(to bottom right, #a2d2ff, #cff2ff);
+}
+
+body.layout12 {
+  background-image: linear-gradient(to bottom right, #ffe9b9, #fff3e3);
+}
+
+body.layout13 {
+  background-image: linear-gradient(to bottom right, #bce6eb, #fed6e3);
+}
+
+body.layout14 {
+  background-image: linear-gradient(to bottom right, #ffd3b5, #ffaaa6, #ff8b94, #ff6988, #ff5f8d);
+}
+
+body.layout15 {
+  background-image: linear-gradient(to bottom right, #a7e9ff, #fed6e3);
+}
+
+        /* Add more styles for other layouts here */
+    </style>
+</head>
+<body class="<%= linkTree.layout %>" style="background-size: cover;
+  background-repeat: no-repeat;background-size: 400% 400%;">
+    <div class="container mt-5">
+        <h1><%= title %></h1>
+        <form method="POST" action="/dashboard/edit/<%= linkTree._id %>">
+            <div class="form-group">
+                <label for="layout">Select a layout:</label>
+                <select name="layout" class="form-control" required>
+                    <option value="" disabled>Select a layout</option>
+                    <option value="layout1" <% if (linkTree.layout === 'layout1') { %>selected<% } %>>Ocean Breeze</option>
+                    <option value="layout2" <% if (linkTree.layout === 'layout2') { %>selected<% } %>>Apricot Dream</option>
+                    <option value="layout3" <% if (linkTree.layout === 'layout3') { %>selected<% } %>>Cotton Candy</option>
+<option value="layout4" <% if (linkTree.layout === 'layout4') { %>selected<% } %>>Lemon Sorbet</option>
+<option value="layout5" <% if (linkTree.layout === 'layout5') { %>selected<% } %>>Coral Crush</option>
+<option value="layout6" <% if (linkTree.layout === 'layout6') { %>selected<% } %>>Blue Lagoon</option>
+<option value="layout7" <% if (linkTree.layout === 'layout7') { %>selected<% } %>>Minty Fresh</option>
+<option value="layout8" <% if (linkTree.layout === 'layout8') { %>selected<% } %>>Peach Paradise</option>
+<option value="layout9" <% if (linkTree.layout === 'layout9') { %>selected<% } %>>Lavender Bliss</option>
+<option value="layout10" <% if (linkTree.layout === 'layout10') { %>selected<% } %>>Blue Sky</option>
+<option value="layout11" <% if (linkTree.layout === 'layout11') { %>selected<% } %>>Rose Garden</option>
+<option value="layout12" <% if (linkTree.layout === 'layout12') { %>selected<% } %>>Lavender Field</option>
+<option value="layout13" <% if (linkTree.layout === 'layout13') { %>selected<% } %>>Mint and Lavender</option>
+<option value="layout14" <% if (linkTree.layout === 'layout14') { %>selected<% } %>>Peach and Pink</option>
+<option value="layout15" <% if (linkTree.layout === 'layout15') { %>selected<% } %>>SkyBlue and Pink</option>
+          </select>
+  </div>
+          <hr>
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Confirm Email</label>
+        <input type="text" class="form-control" id="email" name="email" required>
+      </div>
+      <hr>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+                      </div>
+  <script>
+        const layoutSelect = document.querySelector('[name="layout"]');
+        const body = document.querySelector('body');
+        
+        layoutSelect.addEventListener('change', function() {
+            body.className = this.value;
+        });
+    </script>
+</body>
+</html>

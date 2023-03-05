@@ -1,20 +1,33 @@
 const mongoose = require('mongoose');
 
-const linkTreeSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  title: {
+const linktreeSchema = new mongoose.Schema({
+  layout: {
     type: String,
     required: false,
   },
-  backgroundColor: {
+  profilePicture: {
     type: String,
+    required: false,
   },
-  backgroundImage: {
+  name: {
     type: String,
+    required: false,
+  },
+  pronounce: {
+    type: String,
+    required: false,
+  },
+  bio: {
+    type: String,
+    required: false,
+  },
+  linkTreeName: {
+    type: String,
+    required: false,
+  },
+  header: {
+    type: String,
+    required: false,
   },
   links: [
     {
@@ -26,10 +39,30 @@ const linkTreeSchema = new mongoose.Schema({
         type: String,
         required: false,
       },
+      image: {
+    type: String,
+    required: false,
+  },
     },
   ],
-}, { timestamps: true });
+  blogs: [
+    {
+      title: {
+        type: String,
+        required: false,
+      },
+      content: {
+        type: String,
+        required: false,
+      },
+      image: {
+    type: String,
+    required: false,
+  },
+    },
+  ],
+});
 
-const LinkTree = mongoose.model('LinkTree', linkTreeSchema);
+const Linktree = mongoose.model('Linktree', linktreeSchema);
 
-module.exports = LinkTree;
+module.exports = Linktree;

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Design Your LinkTree Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        background: linear-gradient(to right, #FFB88C, #DE6262);
+        backdrop-filter: blur(14px);
+      }
+       
+      .form-container {
+        display: flex;
+        background: linear-gradient(to right, #FFB88C, #DE6262);
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      form {
+        width: 90%;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+      }
+      #previewImage {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+  margin: 0, auto;
+  margin-bottom: 20px;
+}
+
+    </style>
+</head>
+<body>
+  <div class="form-container">
+    <form action="/dashboard/edit/design/<%= linkTree._id %>" method="POST" enctype="multipart/form-data">
+      <h2 class="mb-4 text-center">Design Your LinkTree Page</h2>
+
+      <div class="form-group mb-3">
+  <label for="profilePicture" class="form-label">Profile Picture</label>
+        <div class="d-flex justify-content-center mt-3">
+    <% if (linkTree.profilePicture) { %>
+            <img src="<%= linkTree.profilePicture %>" alt="Profile Picture" class="img-fluid mt-3" id="previewImage">
+          <% } %>
+        </div>
+  <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*">
+  
+</div>
+
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="<%= linkTree.name %>">
+      </div>
+      <div class="form-group mb-3">
+        <label for="pronounce" class="form-label">Pronounce</label>
+        <select name="pronounce" class="form-control" required>
+                    <option value="pronoun" disabled selected>Select a Pronoun</option>
+                    <option value="He/Him" <% if (linkTree.pronounce === 'He/Him') { %> selected <% } %>>He/Him</option>
+                    <option value="She/Her" <% if (linkTree.pronounce === 'She/Her') { %> selected <% } %>>She/Her</option>
+                    <option value="They/Them" <% if (linkTree.pronounce === 'They/Them') { %> selected <% } %>>They/Them</option>
+                    <option value=" " <% if (linkTree.pronounce === ' ') { %> selected <% } %>>Prefer not to say</option>
+
+                </select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="bio" class="form-label">Bio (support <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" style="text-decoration:none;color:black;">markdown</a>)</label>
+        <textarea class="form-control" id="bio" name="bio"><%= linkTree.bio %></textarea>
+      </div>
+
+      <hr>
+<h5 class="mb-3">Social Links</h5>
+<div id="links-container">
+    <% for (var i=0; i<linkTree.links.length; i++) { %>
+        <div class="link-group mb-3">
+            <input type="text" name="link_title[]" class="form-control" placeholder="Enter link title" value="<%= linkTree.links[i].title %>">
+            <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL" value="<%= linkTree.links[i].url %>">
+            <button type="button" class="btn btn-danger remove-link">Remove</button>
+        </div>
+    <% } %>
+</div>
+<button type="button" id="add-link" class="btn btn-primary">Add More Link</button>
+
+<hr>
+
+<h5 class="mb-3">Write your blog</h5>
+
+<div id="blog-fields">
+    <% for (var i=0; i<linkTree.blogs.length; i++) { %>
+        <div class="blog-field mb-3">
+            <div class="form-group">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title[]" class="form-control" placeholder="Enter your title" value="<%= linkTree.blogs[i].title %>">
+            </div>
+            <div class="form-group mb-3">
+                <label for="description" class="form-label">Description (support <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" style="text-decoration:none;color:black;">markdown</a>)</label>
+                <textarea name="description[]" class="form-control" rows="3" placeholder="Enter your description"><%= linkTree.blogs[i].content %></textarea>
+            </div>
+            <button type="button" class="remove-blog btn btn-danger">Remove</button>
+        </div>
+    <% } %>
+</div>
+
+<button type="button" id="add-blog" class="btn btn-primary mt-2">Add More Blog</button>
+      <hr>
+
+<div class="form-group mb-3">
+      <label for="linkTreeName" class="form-label">LinkTree Name</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">linktree.com/</span>
+        </div>
+        <input type="text" class="form-control" name="linkTreeName" id="linkTreeName" aria-label="LinkTree Name" aria-describedby="basic-addon1" value="<%= linkTree.linkTreeName %>" readonly>
+      </div>
+      <p class="small mt-2">Your LinkTree profile URL will be "linktree.com/your_name"</p>
+  <div class="form-group mb-3">
+  <label for="header" class="form-label">Title Header</label>
+        <textarea class="form-control" id="header" name="header" rows="2"><%= linkTree.header %></textarea>
+</div>
+<p id="linkTreeNameError" class="small mt-2"></p>
+  
+</div>
+
+      <hr>
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Confirm Email</label>
+        <input type="text" class="form-control" id="email" name="email">
+      </div>
+      <hr>
+
+      <button type="submit" class="btn btn-primary mt-4 text-center">Save Changes</button>
+    </form>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+ <script>
+    $(document).ready(function() {
+      $('#profilePicture').change(function() {
+    var file = $(this)[0].files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('#previewImage').attr('src', e.target.result);
+    }
+    reader.readAsDataURL(file);
+  });
+
+      $("#add-link").on("click", function() {
+        var linkGroup = `
+          <div class="link-group mb-3">
+            <input type="text" name="link_title[]" class="form-control" placeholder="Enter link title">
+            <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL">
+            <button type="button" class="btn btn-danger remove-link">Remove</button>
+          </div>
+        `;
+        $("#links-container").append(linkGroup);
+      });
+
+      // Remove link button functionality
+      $(document).on("click", ".remove-link", function() {
+        $(this).parent().remove();
+      });
+    });
+     $(document).ready(function() {
+  // Add blog input field
+  $("#add-blog").click(function() {
+    var blogField = '<div class="blog-field mb-3">' +
+                    '<div class="form-group">' +
+                    '<label for="title" class="form-label">Title</label>' +
+                    '<input type="text" name="title[]" class="form-control" placeholder="Enter your title">' +
+                    '</div>' +
+                    '<div class="form-group mb-3">' +
+                    '<label for="description" class="form-label">Description</label>' +
+                    '<textarea name="description[]" class="form-control" rows="3" placeholder="Enter your description"></textarea>' +
+                    '</div>' +
+                    '<button type="button" class="remove-blog btn btn-danger">Remove</button>' +
+                    '</div>';
+
+    $("#blog-fields").append(blogField);
+  });
+
+  // Remove blog input field
+  $(document).on('click', '.remove-blog', function() {
+    $(this).closest('.blog-field').remove();
+  });
+});
+
+
+  </script>
+</body>
+</html>
