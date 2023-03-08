@@ -41,9 +41,8 @@ async function lala() {
 
 const allUsers = await User.find();
 console.log(allUsers[0])
-console.log(allUsers[0].linktree)
 
-  //await LinkTree.deleteOne({ name: 'Sunshine', });
+  await LinkTree.deleteMany({ layout: 'layout4', });
   const allLinktrees = await LinkTree.find();
   console.log(allLinktrees)
 }

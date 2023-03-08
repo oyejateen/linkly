@@ -42,7 +42,7 @@
 </head>
 <body>
   <div class="form-container">
-    <form action="/dashboard/design/<%= linkTree._id %>" method="POST">
+    <form action="/dashboard/design/<%= linkTree._id %>" method="POST" enctype="multipart/form-data">
       <h2 class="mb-4 text-center">Design Your LinkTree Page</h2>
 
       <div class="form-group mb-3">
@@ -83,7 +83,7 @@
     <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL">
     <div class="input-group mt-2">
       <div class="custom-file">
-        <input type="file" class="custom-file-input" name="link_image[]" accept="image/*">
+        <input type="file" class="custom-file-input" name="link_image" accept="image/*">
         <label class="custom-file-label">Choose file</label>
       </div>
     </div>
@@ -114,7 +114,7 @@
       <label for="image" class="form-label">Image</label>
       <div class="input-group">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" name="image[]">
+          <input type="file" class="custom-file-input" name="images" accept="image/*">
           <label class="custom-file-label">Choose file</label>
         </div>
       </div>
@@ -215,7 +215,7 @@ checkNameBtn.addEventListener('click', checkName);
       <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL">
       <div class="input-group mt-2">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" name="link_image[]" accept="image/*">
+          <input type="file" class="custom-file-input" name="link_image" accept="image/*">
           <label class="custom-file-label">Choose file</label>
         </div>
       </div>
@@ -252,7 +252,7 @@ $(document).on("change", ".custom-file-input", function() {
                     '<label for="image" class="form-label">Image</label>' +
                     '<div class="input-group">' +
                     '<div class="custom-file">' +
-                    '<input type="file" class="custom-file-input" name="image[]">' +
+                    '<input type="file" class="custom-file-input" name="image" accept="image/*">' +
                     '<label class="custom-file-label">Choose file</label>' +
                     '</div>' +
                     '</div>' +

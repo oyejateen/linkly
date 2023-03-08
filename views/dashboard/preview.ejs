@@ -10,15 +10,15 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner&family=Homemade+Apple&family=PT+Sans:wght@400;700&display=swap"
     rel="stylesheet">
+   
     <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/layout1.css">
+    
   <!--  <link rel="stylesheet" href="../css/layout2.css">
     <link rel="stylesheet" href="../css/layout3.css">-->
     <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- HTML Meta Tags -->
@@ -49,6 +49,55 @@
   </head>
 <body>
   <div class="header">
+    <div class="heart-container">
+<input type="checkbox" class="checkbox" id="checkbox" />
+<label for="checkbox">
+      <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+        <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+          <path id="heart" d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" fill="#AAB8C2"/>
+          <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5"/>
+
+          <g id="grp7" opacity="0" transform="translate(7 6)">
+            <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2"/>
+            <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2"/>
+          </g>
+
+          <g id="grp6" opacity="0" transform="translate(0 28)">
+            <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2"/>
+            <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2"/>
+          </g>
+
+          <g id="grp3" opacity="0" transform="translate(52 28)">
+            <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2"/>
+            <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2"/>
+          </g>
+
+          <g id="grp2" opacity="0" transform="translate(44 6)">
+            <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2"/>
+            <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2"/>
+             </g>
+
+          <g id="grp5" opacity="0" transform="translate(14 50)">
+            <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2"/>
+            <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2"/>
+          </g>
+
+          <g id="grp4" opacity="0" transform="translate(35 50)">
+            <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2"/>
+            <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2"/>
+          </g>
+
+          <g id="grp1" opacity="0" transform="translate(24)">
+            <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2"/>
+            <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2"/>
+          </g>
+        </g>
+      </svg>
+    </label>
+
+ <!-- <div class="heart-count">0</div>-->
+</div>
+
     <div class="icon-container">
   <a id="ic" class="share-icon"><i class="fas fa-share-alt"></i></a>
 </div>
@@ -79,7 +128,6 @@
         </div>
       </div>
 
-
     <% if (linkTree.links && linkTree.links.length > 0) { %>
   <h1 style="display:flex;font-size:20px;justify-content:center;" class="blogs">Links</h1>
 <% } %>
@@ -87,15 +135,65 @@
 
       <% linkTree.links.forEach(function(link) { %>
   <a style="text-decoration:none;" target="_blank" href="<%= link.url %>">
-    <button style="display: flex; align-items: center; padding-left: 5px; padding-right: 5px; justify-content: space-between;">
-  <img src="<%= link.image %>" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover;" />
-  <div style="display: flex; align-items: center; justify-content: center; flex-grow: 1;">
+    <button style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
+      <% if (link.image) { %>
+  <img src="<%= link.image %>" style="width: 35px; height:35px; border-radius: 50%; object-fit: cover;" />
+        <div style="display: flex; align-items: center; justify-content: center; margin-right: 25px;  flex-grow: 1;">
+        <% } else { %>
+  <div style="display: flex; align-items: center; justify-content: center;  flex-grow: 1;">
+    <% } %>
     <%= link.title %>
   </div>
 </button>
 
   </a>
 <% }); %>
+  <style>
+    @media (max-width: 576px) {
+  .dropdown-images {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    margin-left: -30px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .dropdown-images {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    margin-left: -25px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .dropdown-images {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 90px;
+    margin-left: -140px;
+  }
+}
+
+@media (min-width: 992px) {
+  .dropdown-images {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    padding: 10px;
+    margin-right: 25px;
+    margin-left: -35px;
+  }
+}
+</style>
 
       <% if (linkTree.blogs && linkTree.blogs.length > 0) { %>
   <h1 style="display:flex;font-size:20px;justify-content:center;" class="blogs">Blogs</h1>
@@ -103,7 +201,14 @@
 
       <div class="dropdown">
   <% for (let i = 0; i < blogsHtml.length; i++) { %>
-    <button class="dropdown-button" onclick="toggleDropdown('<%= 'blog-' + i %>')"><%= [i + 1] %>. <%= linkTree.blogs[i].title %></button>
+<button class="btn btn-outline-secondary rounded-circle dropdown-button" onclick="toggleDropdown('<%= 'blog-' + i %>')">
+  <% if (linkTree.blogs[i].images) { %>
+    <img src="<%= linkTree.blogs[i].images %>" class="dropdown-images" alt="Blog Image">
+  <% } %>
+  <%= [i + 1] %>. <%= linkTree.blogs[i].title %>
+</button>
+
+
     <div class="dropdown-content" id="<%= 'blog-' + i %>">
       <div class="blog">
         <div class="blog-body" style="text-align:left;justify-content:left;"><%- blogsHtml[i].xml %></div>
@@ -121,7 +226,6 @@
   </div>
     <script src="https://kit.fontawesome.com/1d6179e528.js" crossorigin="anonymous"></script>
   
-         
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
 
@@ -144,6 +248,7 @@ dropdownButtons.forEach(button => {
     }
   });
 });
+
     const profilePicture = document.querySelector('.profile-picture');
     const navbar = document.querySelector('.navbar');
 
@@ -195,6 +300,9 @@ shareIcon.addEventListener("click", () => {
   const sanitizedHtml = DOMPurify.sanitize(html);
   return sanitizedHtml;
 }
+if ("<%= linkTree.profileBg %>") {
+        document.body.style.backgroundImage = "url(<%= linkTree.profileBg %>)";
+      } else {
 if ("<%= linkTree.layout %>" === "layout1") {
         document.body.style.backgroundImage = "linear-gradient(to bottom right, #a1c4fd, #c2e9fb)";
       }
@@ -239,6 +347,7 @@ if ("<%= linkTree.layout %>" === "layout1") {
       }
   if ("<%= linkTree.layout %>" === "layout15") {
         document.body.style.backgroundImage = "linear-gradient(to bottom right, #a7e9ff, #fed6e3)";
+  }
   }
    /*
 if (linktree.layout === 'layout1') {

@@ -80,24 +80,6 @@ const blogsHtml = linkTree.blogs.map((blog) => {
   return { ...blog, xml };
 });
 
-
-
-
-
-
-
-/*
-const blogsHtml = linkTree.blogs.map((blog) => {
-  const xml = marked.parse(blog.content);
-  return { ...blog, xml };
-});*/
-
- // Output: "<h2>This is a heading</h2>\n<p>This is some <strong>bold</strong> text.</p>"
-
-
-
-  //const bioHtml = convertToHtml(linkTree.bio);
-    
 res.render('dashboard/preview', { linkTree, blogsHtml });
 
 } else if (username === "dashboard") {

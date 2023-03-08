@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title><%= title %></title>
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
                body.layout1 {
@@ -74,10 +76,10 @@ body.layout15 {
   background-repeat: no-repeat;background-size: 400% 400%;">
     <div class="container mt-5">
         <h1><%= title %></h1>
-        <form method="POST" action="/dashboard/edit/<%= linkTree._id %>">
+        <form method="POST" action="/dashboard/edit/<%= linkTree._id %>" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="layout">Select a layout:</label>
-                <select name="layout" class="form-control" required>
+                <select name="layout" class="form-control">
                     <option value="" disabled>Select a layout</option>
                     <option value="layout1" <% if (linkTree.layout === 'layout1') { %>selected<% } %>>Ocean Breeze</option>
                     <option value="layout2" <% if (linkTree.layout === 'layout2') { %>selected<% } %>>Apricot Dream</option>
@@ -96,6 +98,18 @@ body.layout15 {
 <option value="layout15" <% if (linkTree.layout === 'layout15') { %>selected<% } %>>SkyBlue and Pink</option>
           </select>
   </div>
+          <br>
+          <div style="display:flex;justify-content:center;align-items:center;">OR</div>
+          <br>
+ <div class="form-group mb-3">
+      <label for="image" class="form-label">Select Background Image:</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name="profileBg" accept="image/*">
+          <label class="custom-file-label">Choose file</label>
+        </div>
+      </div>
+ </div>
           <hr>
       <div class="form-group mb-3">
         <label for="email" class="form-label">Confirm Email</label>
@@ -104,6 +118,7 @@ body.layout15 {
       <hr>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+      <div style="display:flex;justify-content:center;align-items:center; margin-top: 20px;">Note: Background Image will be given first preference.</div>
                       </div>
   <script>
         const layoutSelect = document.querySelector('[name="layout"]');
@@ -112,6 +127,25 @@ body.layout15 {
         layoutSelect.addEventListener('change', function() {
             body.className = this.value;
         });
+    $(document).ready(function() {
+  $(document).on("change", ".custom-file-input", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+  $('.custom-file-input').change(function() {
+    var file = $(this)[0].files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      $('body').css({
+        'background-image': 'url(' + e.target.result + ')',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        'min-height': '100%'
+      });
+    }
+    reader.readAsDataURL(file);
+  });
+});
     </script>
 </body>
 </html>

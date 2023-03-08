@@ -16,6 +16,7 @@ const cloudinary = require('cloudinary').v2;
 });
 const upload = multer({
   storage: multer.diskStorage({
+    
     destination: (req, file, cb) => {
       cb(null, './views/images');
     },
@@ -94,7 +95,7 @@ router.get('/edit/:id', authMiddleware.requireAuth, async (req, res) => {
   }
 });
 
-router.post('/edit/:id', authMiddleware.requireAuth, async (req, res) => {
+router.post('/edit/:id', authMiddleware.requireAuth, upload.any(), async (req, res) => {
   const { layout, email } = req.body;
   console.log(req.body)
   try {
@@ -102,6 +103,10 @@ router.post('/edit/:id', authMiddleware.requireAuth, async (req, res) => {
     if (!linkTree) {
       res.render('dashboard/error', { msg: "Profile with this name not found"  });
     }
+    const linkImage = req.files && req.files.find(file => file.fieldname === `profileBg`);
+      console.log(linkImage)
+      const imageUrl = linkImage ? (await cloudinary.uploader.upload(linkImage.path)).secure_url : linkTree.profileBg;
+    linkTree.profileBg = imageUrl;
     linkTree.layout = layout;
  await linkTree.save();
     console.log(email)
@@ -152,45 +157,63 @@ router.get('/edit/design/:id', authMiddleware.requireAuth, async (req, res) => {
   }
 });
 
-router.post('/edit/design/:id', authMiddleware.requireAuth, upload.single('profilePicture'), async (req, res) => {
+router.post('/edit/design/:id', authMiddleware.requireAuth, upload.any(), async (req, res) => {
   const { title, name, pronounce, bio, header, link_title, link_url, description, linkTreeName, email } = req.body;
   console.log(req.body)
-  console.log(req.file)
+  console.log(req.files)
   
   try {
     const linkTree = await LinkTree.findById(req.params.id);
+    console.log(linkTree, "i")
     if (!linkTree) {
       res.render('dashboard/error', { msg: "Profile with this name not found"  });
     }
 
-    // process link data
-    let links = [];
-    if (link_title && link_url) {
-      if (Array.isArray(link_title) && Array.isArray(link_url) && link_title.length === link_url.length) {
-        links = link_title.map((title, index) => {
-          return { title: title, url: link_url[index] };
-        });
-      } else if (typeof link_title === 'string' && typeof link_url === 'string') {
-        links.push({ title: link_title, url: link_url });
-      }
-    }
+    
+let links = [];
+let blogs = [];
 
+if (link_title && link_url) {
+  const imageUrls = await Promise.all(req.files.map(async (file) => {
+    if (file.fieldname === 'link_image[]') {
+      const imageUrl = (await cloudinary.uploader.upload(file.path)).secure_url;
+      console.log(imageUrl, "heyyyy")
+      return imageUrl;
+    }
+  }));
+  console.log(imageUrls, "hey baby")
+  links = link_title.map((title, index) => {
+    return { title: title, url: link_url[index], image: imageUrls[index] };
+  });
+}
+
+if (title && description) {
+  const imageUrls = [];
+  if (Array.isArray(title) && Array.isArray(description) && title.length === description.length) {
     // process blog data
-    let blogs = [];
-    if (title && description) {
-      if (Array.isArray(title) && Array.isArray(description) && title.length === description.length) {
-        blogs = title.map((title, index) => {
-          return { title: title, content: description[index] };
-        });
-      } else if (typeof title === 'string' && typeof description === 'string') {
-        blogs.push({ title: title, content: description });
+    blogs = await Promise.all(title.map(async (title, index) => {
+      const blogImage = req.files && req.files.find(file => file.fieldname === `images[${index}]`);
+      if (blogImage) {
+        const imageUrl = (await cloudinary.uploader.upload(blogImage.path)).secure_url;
+        imageUrls.push(imageUrl);
       }
-    }
+      
+      return { title: title, content: description[index], images: imageUrls[index] };
+    }));
+  }
+}
 
- if (req.file) {
-  const uploadedFile = await cloudinary.uploader.upload(req.file.path);
+
+
+if (req.files) {
+  const profilePicture = req.files.find(file => file.fieldname === 'profilePicture');
+if(profilePicture) {
+  const profilePicturePath = profilePicture ? profilePicture.path : null;
+
+  const uploadedFile = await cloudinary.uploader.upload(profilePicturePath);
       linkTree.profilePicture = uploadedFile.secure_url;
-      fs.unlinkSync(req.file.path);
+      fs.unlinkSync(profilePicturePath);
+                   }
     }
 
     linkTree.title = title;
@@ -221,12 +244,14 @@ router.get('/xd', authMiddleware.requireAuth, (req, res) => {
 router.post('/api/posts', async (req, res) => {
 try {
   console.log(req.body)
-const { name } = req.body
-const linkTree = await LinkTree.findOne({ linkTreeName: name });
-if (linkTree) {
-return res.status(406).json({ message: 'Linktree with this name already exists' });
+const { linkTreeName } = req.body
+const linkTree = await LinkTree.findOne({ linkTreeName: linkTreeName });
+  console.log(linkTreeName);
+console.log(linkTree)
+if (!linkTree) {
+return res.status(200).json({ message: 'Linktree with this name available' });
 } else {
-return res.status(200).json({ message: 'Linktree name available' });
+return res.status(406).json({ message: 'Linktree name not available' });
 }
 } catch (err) {
 console.log(err);
@@ -238,15 +263,19 @@ router.get('/create', (req, res) => {
   res.render('dashboard/create');
 });
 
-router.post('/create', authMiddleware.requireAuth, async (req, res) => {
+router.post('/create', authMiddleware.requireAuth, upload.any(), async (req, res) => {
   const { layout } = req.body;
-  console.log(req.files)
+  
   console.log(req.file)
   console.log(req.body)
   try {
+    const linkImage = req.files && req.files.find(file => file.fieldname === `profileBg`);
+      console.log(linkImage)
+      const imageUrl = linkImage ? (await cloudinary.uploader.upload(linkImage.path)).secure_url : null;
     const linkTree = await LinkTree.create({
       layout,
       userId: req.user._id,
+      profileBg: imageUrl,
     });
     res.redirect('/dashboard/design/' + linkTree._id);
   } catch (err) {
@@ -272,77 +301,60 @@ router.get('/design/:id', authMiddleware.requireAuth, async (req, res) => {
 
 
 
-router.post('/design/:id', authMiddleware.requireAuth, upload.single('profilePicture'), async (req, res) => {
-  const { title, name, pronounce, bio, header, link_title, link_url, description, linkTreeName, } = req.body;
+router.post('/design/:id', authMiddleware.requireAuth, upload.any(), async (req, res) => {
+  const { title, name, pronounce, bio, header, link_title, link_url, description, linkTreeName } = req.body;
   console.log(req.body)
-  console.log(req.file)
+  console.log(req.files)
   
   try {
     const linkTree = await LinkTree.findById(req.params.id);
     if (!linkTree) {
       res.render('dashboard/error', { msg: "Profile with this name not found"  });
     }
-
-/*let links = [];
-if (link_title && link_url) {
-  if (Array.isArray(link_title) && Array.isArray(link_url) && link_title.length === link_url.length) {
-    links = link_title.map((title, index) => {
-      return { title: title, url: link_url[index] };
-    });
-  } else if (typeof link_title === 'string' && typeof link_url === 'string') {
-    links.push({ title: link_title, url: link_url });
-  }
-}*/
-
-    
+    const linkPree = await LinkTree.findOne({ linkTreeName: linkTreeName });
+if (linkPree) {
+res.render('dashboard/error', { msg: "LinkTree with similar name already exists. Please change your linkTreeName"  });
+}
 let links = [];
-if (link_title && link_url) {
-  if (Array.isArray(link_title) && Array.isArray(link_url) && link_title.length === link_url.length) {
-    links = link_title.map((title, index) => {
-      const linkImage = req.files && req.files[`link_image_${index}`];
-      const imageUrl = linkImage ? (await cloudinary.uploader.upload(linkImage.path)).secure_url : null;
-      return { title: title, url: link_url[index], image: imageUrl };
-    });
-  } else if (typeof link_title === 'string' && typeof link_url === 'string') {
-    const linkImage = req.files && req.files['link_image'];
-    const imageUrl = linkImage ? (await cloudinary.uploader.upload(linkImage.path)).secure_url : null;
-    links.push({ title: link_title, url: link_url, image: imageUrl });
-  }
-}
-
-    
-/*let blogs = [];
-if (title && description) {
-  if (Array.isArray(title) && Array.isArray(description) && title.length === description.length) {
-    blogs = title.map((title, index) => {
-      return { title: title, content: description[index] };
-    });
-  } else if (typeof title === 'string' && typeof description === 'string') {
-    blogs.push({ title: title, content: description });
-  }
-}*/
-// process blog data
 let blogs = [];
+
+if (link_title && link_url) {
+  const imageUrls = await Promise.all(req.files.map(async (file) => {
+    if (file.fieldname === 'link_image[]') {
+      const imageUrl = (await cloudinary.uploader.upload(file.path)).secure_url;
+      console.log(imageUrl, "heyyyy")
+      return imageUrl;
+    }
+  }));
+  console.log(imageUrls, "hey baby")
+  links = link_title.map((title, index) => {
+    return { title: title, url: link_url[index], image: imageUrls[index] };
+  });
+}
+
 if (title && description) {
+  const imageUrls = [];
   if (Array.isArray(title) && Array.isArray(description) && title.length === description.length) {
-    blogs = title.map(async (title, index) => {
-      const blogImage = req.files && req.files[`blog_image_${index}`];
-      const imageUrl = blogImage ? (await cloudinary.uploader.upload(blogImage.path)).secure_url : null;
-      return { title: title, content: description[index], image: imageUrl };
-    });
-    blogs = await Promise.all(blogs);
-  } else if (typeof title === 'string' && typeof description === 'string') {
-    const blogImage = req.files && req.files['blog_image'];
-    const imageUrl = blogImage ? (await cloudinary.uploader.upload(blogImage.path)).secure_url : null;
-    blogs.push({ title: title, content: description, image: imageUrl });
+    // process blog data
+    blogs = await Promise.all(title.map(async (title, index) => {
+      const blogImage = req.files && req.files.find(file => file.fieldname === `images[${index}]`);
+      if (blogImage) {
+        const imageUrl = (await cloudinary.uploader.upload(blogImage.path)).secure_url;
+        imageUrls.push(imageUrl);
+      }
+      
+      return { title: title, content: description[index], images: imageUrls[index] };
+    }));
   }
 }
 
+if (req.files) {
+  const profilePicture = req.files.find(file => file.fieldname === 'profilePicture');
+const profilePicturePath = profilePicture ? profilePicture.path : null;
 
-if (req.file) {
-  const uploadedFile = await cloudinary.uploader.upload(req.file.path);
+  const uploadedFile = await cloudinary.uploader.upload(profilePicturePath);
       linkTree.profilePicture = uploadedFile.secure_url;
-      fs.unlinkSync(req.file.path);
+      fs.unlinkSync(profilePicturePath);
     }
 
     linkTree.title = title;
@@ -362,7 +374,7 @@ if (req.file) {
     if (!user) {
       return res.render('dashboard/error', { msg: "User Not Found"  });
     }
-    console.log(lin)
+    console.log(linkTree)
     res.redirect('/dashboard/success/' + linkTree._id);
   } catch (err) {
     console.log(err);

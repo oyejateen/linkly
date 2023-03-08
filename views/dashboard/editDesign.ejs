@@ -84,6 +84,12 @@
         <div class="link-group mb-3">
             <input type="text" name="link_title[]" class="form-control" placeholder="Enter link title" value="<%= linkTree.links[i].title %>">
             <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL" value="<%= linkTree.links[i].url %>">
+          <div class="input-group mt-2">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" name="link_image[]" accept="image/*">
+        <label class="custom-file-label">Choose file</label>
+      </div>
+          </div>
             <button type="button" class="btn btn-danger remove-link">Remove</button>
         </div>
     <% } %>
@@ -105,6 +111,15 @@
                 <label for="description" class="form-label">Description (support <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" style="text-decoration:none;color:black;">markdown</a>)</label>
                 <textarea name="description[]" class="form-control" rows="3" placeholder="Enter your description"><%= linkTree.blogs[i].content %></textarea>
             </div>
+           <div class="form-group mb-3">
+      <label for="image" class="form-label">Image</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name="images" accept="image/*">
+          <label class="custom-file-label">Choose file</label>
+        </div>
+      </div>
+    </div>
             <button type="button" class="remove-blog btn btn-danger">Remove</button>
         </div>
     <% } %>
@@ -161,6 +176,12 @@
           <div class="link-group mb-3">
             <input type="text" name="link_title[]" class="form-control" placeholder="Enter link title">
             <input type="url" name="link_url[]" class="form-control" placeholder="Enter link URL">
+            <div class="input-group mt-2">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" name="link_image" accept="image/*">
+        <label class="custom-file-label">Choose file</label>
+      </div>
+    </div>
             <button type="button" class="btn btn-danger remove-link">Remove</button>
           </div>
         `;
@@ -183,13 +204,24 @@
                     '<div class="form-group mb-3">' +
                     '<label for="description" class="form-label">Description</label>' +
                     '<textarea name="description[]" class="form-control" rows="3" placeholder="Enter your description"></textarea>' +
-                    '</div>' +
+                    '</div>' +  '<div class="form-group mb-3">' +
+      '<label for="image" class="form-label">Image</label>' +
+      '<div class="input-group">' +
+        '<div class="custom-file">' +
+          '<input type="file" class="custom-file-input" name="images" accept="image/*">' +
+          '<label class="custom-file-label">Choose file</label>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
                     '<button type="button" class="remove-blog btn btn-danger">Remove</button>' +
                     '</div>';
 
     $("#blog-fields").append(blogField);
   });
-
+$(document).on("change", ".custom-file-input", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
   // Remove blog input field
   $(document).on('click', '.remove-blog', function() {
     $(this).closest('.blog-field').remove();

@@ -9,6 +9,10 @@ const linktreeSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  profileBg: {
+    type: String,
+    required: false,
+  },
   name: {
     type: String,
     required: false,
@@ -55,7 +59,7 @@ const linktreeSchema = new mongoose.Schema({
         type: String,
         required: false,
       },
-      image: {
+      images: {
     type: String,
     required: false,
   },
